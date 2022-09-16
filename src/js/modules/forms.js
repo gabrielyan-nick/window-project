@@ -1,13 +1,10 @@
-const forms = () => {
-  const form = document.querySelectorAll("form"),
-    inputs = document.querySelectorAll("input"),
-    phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+import checkNumInputs from "./checkNumInputs";
 
-    phoneInputs.forEach(item => {
-      item.addEventListener('input', (e) => {
-       item.value = item.value.replace(/\D/g, '');
-      });
-    });
+const forms = (state) => {
+  const form = document.querySelectorAll("form"),
+    inputs = document.querySelectorAll("input");
+
+  checkNumInputs('input[name="user_phone"]');
 
   const message = {
     loading: "Загрузка...",
@@ -26,7 +23,7 @@ const forms = () => {
   };
 
   const clearForm = () => {
-    inputs.forEach(item => {
+    inputs.forEach((item) => {
       item.value = "";
     });
   };
@@ -40,19 +37,36 @@ const forms = () => {
       item.insertAdjacentElement("beforeend", statusMessage);
 
       const formData = new FormData(item);
+      if (item.getAttribute('data-calc') === 'end') {    // Если отправляется вторая форма.
+        for (let key in state) {
+          formData.append(key, state[key]);
+        }
+        setTimeout(() => {
+          document.querySelector('.popup_calc_end').style.display = 'none';
+          document.body.classList.remove("modal-open");
+        }, 2000);
+        document.querySelectorAll(".checkbox").forEach(item => {
+          item.checked = false;
+        });
+      }
 
+      
       // const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
       postData("assets/server.php", formData)
-        .then(data => {
+        .then((data) => {
           console.log(data);
           statusMessage.textContent = message.success;
         })
-        .catch(data => {
+        .catch((data) => {
           console.log(data);
           statusMessage.textContent = message.failure;
         })
         .finally(() => {
+          for (let key in state) {
+            delete state[key];
+          }
+          console.log(state);
           clearForm();
           setTimeout(() => {
             statusMessage.remove();

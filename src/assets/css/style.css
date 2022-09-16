@@ -1830,3 +1830,11 @@ textarea:focus {
 .hide {
   display: none;
 }
+
+.balcon_icons_img > img {
+  cursor: pointer;
+}
+
+.big_img img {
+  margin: 0 auto;
+} 
