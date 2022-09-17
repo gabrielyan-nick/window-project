@@ -26,6 +26,9 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeClass) => {
     } catch {}
 
     tabs[i].classList.add(activeClass);
+    document.querySelectorAll('.glazing_content').forEach(item => {
+      item.classList.add('faded');
+    });
   }
 
   header.addEventListener("click", (e) => {

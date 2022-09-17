@@ -832,6 +832,7 @@ textarea:focus {
 
 /*Modals*/
 .popup,
+.image_popup, 
 .popup_engineer,
 .popup_calc_end {
   display: none;
@@ -1829,4 +1830,26 @@ textarea:focus {
 
 .hide {
   display: none;
+}
+
+.balcon_icons_img > img {
+  cursor: pointer;
+}
+
+.big_img img {
+  margin: 0 auto;
+} 
+
+.faded {
+animation-name: faded;
+animation-duration: 1s;
+}
+
+@keyframes faded {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 1;
+  }
 }

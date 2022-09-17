@@ -37,20 +37,20 @@ const forms = (state) => {
       item.insertAdjacentElement("beforeend", statusMessage);
 
       const formData = new FormData(item);
-      if (item.getAttribute('data-calc') === 'end') {    // Если отправляется вторая форма.
+      if (item.getAttribute("data-calc") === "end") {
+        // Если отправляется вторая форма.
         for (let key in state) {
           formData.append(key, state[key]);
         }
         setTimeout(() => {
-          document.querySelector('.popup_calc_end').style.display = 'none';
+          document.querySelector(".popup_calc_end").style.display = "none";
           document.body.classList.remove("modal-open");
         }, 2000);
-        document.querySelectorAll(".checkbox").forEach(item => {
+        document.querySelectorAll(".checkbox").forEach((item) => {
           item.checked = false;
         });
       }
 
-      
       // const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
       postData("assets/server.php", formData)
