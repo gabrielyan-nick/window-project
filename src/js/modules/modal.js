@@ -1,7 +1,6 @@
 "use strict";
 
 const modals = (state) => {
-  
   function bindModal(
     triggerSelector,
     modalSelector,
@@ -55,10 +54,10 @@ const modals = (state) => {
     });
   }
 
-  document.querySelector('.popup_calc_button').addEventListener('click', () => {
-    document.querySelectorAll('.whdata').forEach(item => {
-      item.value = '';
-    }); 
+  document.querySelector(".popup_calc_button").addEventListener("click", () => {
+    document.querySelectorAll(".whdata").forEach((item) => {
+      item.value = "";
+    });
   });
 
   function calcScroll() {
@@ -74,34 +73,55 @@ const modals = (state) => {
     return scrollWidth;
   }
 
-  // function modalValidator(
-  //   state,
-  //   modalSelector,
-  //   nextModalSelector,
-  //   btnSelector,
-  //   ...data
-  // ) {
-  //   document.querySelector(btnSelector).addEventListener("click", () => {
-  //     const dataArr = data;
+  function modalValidator(
+    state,
+    modalSelector,
+    nextModalSelector,
+    btnSelector,
+    ...data
+  ) {
+    const whInputs = document.querySelectorAll(".whdata"),
+      btnNext = document.querySelector(btnSelector);
 
-  //     function f() {
-  //       return dataArr.every((item) => {
-  //         Object.keys(state).includes(item);
-  //       });
-  //     }
-  //     console.log(f());
-  //     if (!f()) {
-  //       console.log(state);
-  //       document.querySelector(modalSelector).style.display = "block";
-  //       document.querySelector(nextModalSelector).style.display = "none";
-  //     }
-  //   });
-  // }
+    whInputs.forEach((item) => {
+      // Убираем красный бодер при вводе.
+      item.addEventListener("input", (e) => {
+        item.style.border = "";
+      });
+    });
+
+    btnNext.addEventListener("click", () => {
+      const dataArr = data;
+      const arrState = Object.keys(state);
+
+      if (state.width == "" || !state.width) {
+        delete state.width;
+        whInputs[0].style.border = "1px solid red";
+      }
+      if (state.height == "" || !state.height) {
+        delete state.height;
+        whInputs[1].style.border = "1px solid red";
+      }
+
+      let arrEqual = dataArr.every((item) => {
+        if (arrState.includes(item)) {
+          return true;
+        }
+
+        if (!arrEqual) {
+          console.log(arrState);
+          console.log(dataArr);
+          document.querySelector(modalSelector).style.display = "block";
+          document.querySelector(nextModalSelector).style.display = "none";
+        }
+      });
+    });
+  }
 
   const modalTimer = setTimeout(() => {
     document.querySelector(".popup").style.display = "block";
     document.body.classList.add("modal-open");
-  }, 5000);
+  }, 60000);
 
   bindModal(
     ".popup_engineer_btn",
@@ -122,15 +142,23 @@ const modals = (state) => {
     ".popup_calc_end_close",
     false
   );
-  // modalValidator(
-  //   state,
-  //   ".popup_calc",
-  //   ".popup_calc_profile",
-  //   ".popup_calc_button",
-  //   "form",
-  //   "width",
-  //   "height"
-  // );
+  modalValidator(
+    state,
+    ".popup_calc",
+    ".popup_calc_profile",
+    ".popup_calc_button",
+    "form",
+    "width",
+    "height"
+  );
+  modalValidator(
+    state,
+    ".popup_calc_profile",
+    ".popup_calc_end",
+    ".popup_calc_profile_button",
+    "type",
+    "profile"
+  );
 };
 
 export default modals;
