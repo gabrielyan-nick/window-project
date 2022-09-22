@@ -18497,6 +18497,7 @@ var modals = function modals(state) {
 
     var whInputs = document.querySelectorAll(".whdata"),
         btnNext = document.querySelector(btnSelector);
+    console.log(whInputs);
     whInputs.forEach(function (item) {
       // Убираем красный бодер при вводе.
       item.addEventListener("input", function (e) {
