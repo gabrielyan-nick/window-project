@@ -82,7 +82,6 @@ const modals = (state) => {
   ) {
     const whInputs = document.querySelectorAll(".whdata"),
       btnNext = document.querySelector(btnSelector);
-console.log(whInputs);
     whInputs.forEach((item) => {
       // Убираем красный бодер при вводе.
       item.addEventListener("input", (e) => {
@@ -109,8 +108,6 @@ console.log(whInputs);
         }
 
         if (!arrEqual) {
-          console.log(arrState);
-          console.log(dataArr);
           document.querySelector(modalSelector).style.display = "block";
           document.querySelector(nextModalSelector).style.display = "none";
         }
@@ -162,6 +159,3 @@ console.log(whInputs);
 };
 
 export default modals;
-
-
-

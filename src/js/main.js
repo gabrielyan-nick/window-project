@@ -7,6 +7,7 @@ import forms from "./modules/forms";
 import changeModalState from './modules/changeModalState';
 import timer from './modules/timer';
 import images from './modules/images';
+import scrolling from './modules/scrolling';
 
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -25,4 +26,5 @@ window.addEventListener("DOMContentLoaded", () => {
   modals(modalState);
   timer('.container1', '2022-10-13');
   images();
+  scrolling('.pageup');
 });

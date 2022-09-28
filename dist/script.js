@@ -18116,6 +18116,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/changeModalState */ "./src/js/modules/changeModalState.js");
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
 /* harmony import */ var _modules_images__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/images */ "./src/js/modules/images.js");
+/* harmony import */ var _modules_scrolling__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/scrolling */ "./src/js/modules/scrolling.js");
+
 
 
 
@@ -18135,6 +18137,7 @@ window.addEventListener("DOMContentLoaded", function () {
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])(modalState);
   Object(_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('.container1', '2022-10-13');
   Object(_modules_images__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_7__["default"])('.pageup');
 });
 
 /***/ }),
@@ -18497,7 +18500,6 @@ var modals = function modals(state) {
 
     var whInputs = document.querySelectorAll(".whdata"),
         btnNext = document.querySelector(btnSelector);
-    console.log(whInputs);
     whInputs.forEach(function (item) {
       // Убираем красный бодер при вводе.
       item.addEventListener("input", function (e) {
@@ -18524,8 +18526,6 @@ var modals = function modals(state) {
         }
 
         if (!arrEqual) {
-          console.log(arrState);
-          console.log(dataArr);
           document.querySelector(modalSelector).style.display = "block";
           document.querySelector(nextModalSelector).style.display = "none";
         }
@@ -18547,6 +18547,65 @@ var modals = function modals(state) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
+
+/***/ }),
+
+/***/ "./src/js/modules/scrolling.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/scrolling.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var scrolling = function scrolling(selector) {
+  var upArrow = document.querySelector(selector);
+  window.addEventListener("scroll", function () {
+    if (document.documentElement.scrollTop > 1650) {
+      upArrow.classList.add("animated", "fadeIn");
+      upArrow.classList.remove("fadeOut");
+    } else {
+      upArrow.classList.remove("fadeIn");
+      upArrow.classList.add("fadeOut");
+    }
+  }); // Scrolling with requestAnimationFrame.
+
+  var links = document.querySelectorAll('[href^="#"]'),
+      speed = 0.2;
+  links.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      var widthTop = Math.round(document.body.scrollTop || document.documentElement.scrollTop),
+          hash = this.hash,
+          toBlock = document.querySelector(hash).getBoundingClientRect().top,
+          start = null;
+      requestAnimationFrame(step);
+
+      function step(time) {
+        if (start === null) {
+          start = time;
+        }
+
+        var progress = time - start,
+            r = toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock);
+        document.documentElement.scrollTo(0, r);
+
+        if (r != widthTop + toBlock) {
+          requestAnimationFrame(step);
+        } else {
+          location.hash = hash;
+        }
+      }
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (scrolling);
 
 /***/ }),
 
